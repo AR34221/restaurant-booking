@@ -1,0 +1,38 @@
+<!-- server/views/partials/header.ejs -->
+<header>
+  <div class="logo">
+    <h1>FLAVOR</h1>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a href="/"
+           class="<%= page === 'home' ? 'active' : '' %>">
+          Главная
+        </a>
+      </li>
+      <li>
+        <a href="/booking"
+           class="<%= page === 'booking' ? 'active' : '' %>">
+          Бронирование
+        </a>
+      </li>
+      <li>
+        <a href="/account"
+           class="<%= page === 'account' ? 'active' : '' %>">
+          Личный кабинет
+        </a>
+      </li>
+
+      <% /* Ссылка на админку только для admin-роли */ %>
+      <% if (typeof user !== 'undefined' && user.role === 'admin') { %>
+        <li>
+          <a href="/admin"
+             class="<%= page === 'admin' ? 'active' : '' %>">
+            Админка
+          </a>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

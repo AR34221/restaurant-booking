@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Личный кабинет — FLAVOR</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/account.css" />
+</head>
+<body>
+  <%- include('../partials/header', { page: 'account', user: user }) %>
+
+  <main>
+    <!-- Профиль -->
+    <section class="account-container">
+      <h2>Учётная запись</h2>
+      <div class="account-info">
+        <p><strong>Имя:</strong> <%= user.username %></p>
+        <p><strong>Телефон:</strong> <%= user.phone %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+      </div>
+      <div class="account-actions">
+        <!-- Форма удаления аккаунта -->
+        <form method="POST" action="/account/delete" onsubmit="return confirm('Вы уверены? Это действие необратимо.');">
+          <button type="submit" class="button button-secondary">Удалить аккаунт</button>
+        </form>
+        <a href="/logout" class="button button-secondary">Выйти</a>
+      </div>
+    </section>
+
+    <!-- Список бронирований -->
+    <section class="account-bookings">
+      <h2>Мои бронирования</h2>
+      <% if (bookings.length) { %>
+        <ul class="booking-list">
+          <% bookings.forEach(b => { %>
+            <li>
+              <span class="date"><%= b.dateFormatted %></span>
+              <span class="time"><%= b.booking_time %></span>
+              <span class="table">Стол <%= b.table_id %></span>
+              <form method="POST" action="/account/cancel" class="cancel-form">
+                <input type="hidden" name="id" value="<%= b.id %>">
+                <button type="submit" class="button-danger">Отменить</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="no-bookings">У вас пока нет активных бронирований.</p>
+      <% } %>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

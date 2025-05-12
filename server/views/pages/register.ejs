@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация — FLAVOR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('../partials/header', { page: 'register' }) %>
+  <main style="padding:120px 100px 40px; font-family:'Montserrat',sans-serif;">
+    <section style="max-width:400px; margin:0 auto; color:#fff;">
+      <h2 style="font-weight:500; margin-bottom:20px;">Регистрация</h2>
+
+      <% if (error) { %>
+        <div style="background:#a00; padding:10px; border-radius:5px; margin-bottom:15px; color:#fff;">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form method="POST" action="/register" style="display:flex; flex-direction:column; gap:12px;">
+        <label>Имя пользователя</label>
+        <input type="text"     name="username"        required
+               style="width:100%;padding:8px;border-radius:4px;border:none;" />
+
+        <label>Телефон</label>
+        <input type="tel"      name="phone"           pattern="\+?\d{10,15}" required
+               style="width:100%;padding:8px;border-radius:4px;border:none;" />
+
+        <label>Email</label>
+        <input type="email"    name="email"           required
+               style="width:100%;padding:8px;border-radius:4px;border:none;" />
+
+        <label>Пароль (≥6 символов)</label>
+        <input type="password" name="password"        required minlength="6"
+               style="width:100%;padding:8px;border-radius:4px;border:none;" />
+
+        <label>Подтверждение пароля</label>
+        <input type="password" name="confirmPassword" required minlength="6"
+               style="width:100%;padding:8px;border-radius:4px;border:none;" />
+
+        <button type="submit"
+                style="width:100%;padding:10px;background:#3CBA54;color:#fff;
+                       border:none;border-radius:5px;font-family:'Montserrat';font-weight:500;cursor:pointer;">
+          Зарегистрироваться
+        </button>
+      </form>
+
+      <p style="margin-top:15px;color:#aaa;">
+        Уже есть аккаунт? <a href="/login" style="color:#3CBA54;">Войти</a>
+      </p>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>

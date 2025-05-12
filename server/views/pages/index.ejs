@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FLAVOR — Ресторан</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<%- include('../partials/header', { page: 'home', user: user }) %>
+
+<main>
+  <!-- Приветствие с фоном -->
+  <section class="intro" style="background-image: url('/img/Main_image.png'); background-size: cover; background-position: center; height: 100vh; position: relative;">
+    <div class="overlay"></div>
+    <div class="intro-content">
+      <h2 class="intro-title">Добро пожаловать в ресторан Flavor!</h2>
+      <p class="intro-text">Мы рады предложить вам уютную атмосферу, изысканную кухню и удобный способ забронировать столик онлайн.</p>
+      <p class="intro-text">С помощью нашего онлайн-сервиса вы можете выбрать удобное для вас время, дату и подходящий столик, просто взглянув на интерактивную схему зала.</p>
+    </div>
+  </section>
+
+  <!-- Меню -->
+  <section class="menu">
+    <div class="menu-header">
+      <h2>Меню</h2>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-header">Закуски</h3>
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="/img/Menu_1.png" alt="Закуска">
+          <div class="menu-item-text">
+            <h4>Брускетта с печёным баклажаном и страчателлой</h4>
+            <p>Лёгкий хрустящий тост с кремом из баклажана, сыром страчателла и микрозеленью.</p>
+            <span>430 ₽</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <img src="/img/Menu_2.png" alt="Закуска">
+          <div class="menu-item-text">
+            <h4>Говяжий язык с хреном и вяленой сливой</h4>
+            <p>Тонко нарезанный язык с пряным хреном и сладкой сливой в собственном соку.</p>
+            <span>520 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-header">Основные блюда</h3>
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="/img/Menu_3.png" alt="Основное блюдо">
+          <div class="menu-item-text">
+            <h4>Гратен из картофеля с тушёной телятиной</h4>
+            <p>Слойный картофель, запечённый в сливках и сыре, подаётся с сочной телятиной.</p>
+            <span>890 ₽</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <img src="/img/Menu_4.png" alt="Основное блюдо">
+          <div class="menu-item-text">
+            <h4>Филе судака с овощами гриль и соусом из каперсов</h4>
+            <p>Нежная рыба, обжаренная до золотистой корочки, с сезонными овощами.</p>
+            <span>940 ₽</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <img src="/img/Menu_5.png" alt="Основное блюдо">
+          <div class="menu-item-text">
+            <h4>Паста с грибным соусом</h4>
+            <p>Домашняя паста с нежным кремовым соусом и лесными грибами.</p>
+            <span>790 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-header">Десерты</h3>
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="/img/Menu_6.png" alt="Десерт">
+          <div class="menu-item-text">
+            <h4>Мусс из чёрной смородины с миндальной крошкой</h4>
+            <p>Лёгкий воздушный мусс на подушке из миндаля, украшен свежими ягодами.</p>
+            <span>460 ₽</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <img src="/img/Menu_7.png" alt="Десерт">
+          <div class="menu-item-text">
+            <h4>Карамельный чизкейк с солёной карамелью</h4>
+            <p>Нежный чизкейк на печеночной основе, с тягучей карамелью.</p>
+            <span>490 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/script.js"></script>
+</body>
+</html>

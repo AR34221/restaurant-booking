@@ -1,0 +1,340 @@
+  /* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #121212;
+    color: #fff;
+}
+
+/* Шапка сайта */
+header {
+    background-color: #1C1D1E;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    padding-left: 100px;
+    padding-right: 100px;
+    height: 100px; /* Высота хедера уменьшена */
+}
+
+header .logo h1 {
+    color: #fff;
+    font-weight: 400; /* Regular */
+    font-size: 2rem;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    position: relative;
+    display: inline-block; /* важно */
+    color: #fff;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+header nav ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+
+header nav ul li a.active {
+    font-weight: 600; /* Semibold для активной страницы */
+}
+
+/* Приветствие с фоном */
+.intro {
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 120px;
+}
+
+.intro .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Более темное затенение */
+    z-index: 1;
+}
+
+.intro-content {
+    z-index: 2;
+    color: white;
+    width: 830px;
+    text-align: center;
+}
+
+.intro-title {
+    font-weight: 600;
+    font-size: 33px;
+    margin-bottom: 68px;
+}
+
+.intro-text {
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-top: 37px;
+}
+
+/* Меню */
+.menu {
+    background-color: #2A2D2F; /* Темно-серый фон для всей секции меню */
+    margin-top: 0;
+}
+
+.menu-header {
+    background-color: #2A2D2F;
+    height: 127px;
+    width: 100vw; /* Растягиваем на всю ширину экрана */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.menu-header h2 {
+    font-weight: 600;
+    font-size: 2rem;
+    color: #fff;
+}
+
+/* Категории меню */
+.menu-category {
+    margin-top: 0px;
+    padding: 0 100px; /* Отступы для содержимого категорий */
+}
+
+.menu-category-header {
+    background-color: #1C1D1E;
+    height: 127px;
+    width: 100vw; /* Растягиваем на всю ширину экрана */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.menu-category h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Меню: блюда */
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 70px;
+    padding-bottom: 50px;
+}
+
+.menu-item {
+    display: flex;
+    background-color: #2A2D2F;
+    padding: 20px;
+    border-radius: 10px;
+    width: 540px;
+    max-width: 100%;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-item img {
+    width: 236px;
+    height: 236px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6); /* Тень */
+}
+
+
+.menu-item-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    color: #fff;
+}
+
+.menu-item-text h4 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.menu-item-text p {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.menu-item-text span {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+
+
+/* Подвал */
+footer {
+    background-color: #1C1D1E;
+    text-align: center;
+    padding: 20px;
+    margin-top: 0px;
+    height: 80px; /* Высота футера уменьшена */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 100px; /* Отступ слева */
+    padding-right: 100px; /* Отступ справа */
+    color: #fff;
+}
+
+footer p {
+    white-space: nowrap;
+}
+
+/* ================================
+   Адаптивность для экранов < 768px
+   ================================ */
+@media (max-width: 768px) {
+    main {
+        margin-top: 100px;
+    }
+  /* Шапка */
+  header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    text-align: center;
+    gap: 10px;
+  }
+  header .logo h1 {
+    font-size: 1.8rem;
+  }
+  header nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  header nav ul li a {
+    font-size: 1rem;
+  }
+
+  /* Секция intro */
+  .intro {
+    padding-top: 80px; /* чтобы не пересекаться с header */
+  }
+  .intro-content {
+    width: 90%;
+    max-width: none;
+  }
+  .intro-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  .intro-text {
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+
+  /* Меню */
+  .menu-category {
+    padding: 0 20px;
+  }
+  .menu-items {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .menu-item {
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+  }
+  .menu-item img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  .menu-item-text h4 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .menu-item-text p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .menu-item-text span {
+    font-size: 1.1rem;
+  }
+
+  /* Футер */
+  footer {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+    gap: 5px;
+  }
+  footer p {
+    font-size: 0.9rem;
+  }
+}
+
+

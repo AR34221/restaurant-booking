@@ -1,0 +1,149 @@
+/* css/admin.css */
+
+/* Основной контейнер админ-панели */
+.admin-dashboard {
+  padding: 120px 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+/* Заголовок */
+.admin-dashboard h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Общий отступ между секциями */
+.admin-section {
+  margin-bottom: 40px;
+}
+
+/* Названия секций */
+.admin-section h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+/* Таблицы: прокрутка по горизонтали */
+.admin-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-section th,
+.admin-section td {
+  white-space: nowrap;
+  padding: 8px 12px;
+  border: 1px solid #555;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+/* Инлайн-формы */
+.inline-form {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.inline-form input {
+  padding: 6px 8px;
+  border: none;
+  border-radius: 4px;
+  background: #3A3E42;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+.inline-form input:focus {
+  outline: 2px solid #3CBA54;
+}
+
+/* Кнопки */
+.btn-primary,
+.btn-danger {
+  background: #424447;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover,
+.btn-danger:hover {
+  background: #787b7e;
+}
+
+/* Десктоп: бронирования и пользователи в ряд */
+@media (min-width: 1024px) {
+  .admin-dashboard {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "bookings tables"
+      "users users";
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+  }
+  .admin-dashboard h2 {
+    grid-area: header;
+  }
+  .admin-section:nth-of-type(1) {
+    grid-area: bookings;
+  }
+  .admin-section:nth-of-type(2) {
+    grid-area: tables;
+  }
+  .admin-section:nth-of-type(3) {
+    grid-area: users;
+  }
+}
+
+/* Планшет и мобильный: колонки */
+@media (max-width: 1023px) {
+  .admin-dashboard {
+    display: block;
+    padding: 120px 20px;
+  }
+  .admin-dashboard h2 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .admin-section h3 {
+    font-size: 1.3rem;
+  }
+  .inline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Узкие экраны */
+@media (max-width: 480px) {
+  .admin-dashboard {
+    padding: 140px 20px 50px; /* +20px сверху к desktop-паддингу */
+  }
+  .admin-section th,
+  .admin-section td {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+  .inline-form input,
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.9rem;
+    padding: 5px 8px;
+  }
+}

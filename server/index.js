@@ -4,37 +4,38 @@ const path      = require('path');
 const express   = require('express');
 const session   = require('express-session');
 const cors      = require('cors');
-const pool      = require('./db');                       // PG Pool из db.js
-const PgSession = require('connect-pg-simple')(session); // сессии в Postgres
+const pool      = require('./db');                       // наш PG-пул
+const PgSession = require('connect-pg-simple')(session); // хранение сессий в Postgres
+const cron      = require('node-cron');
 
 // роуты и middleware
-const bookRoute   = require('./routes/book');
-const tableRoute  = require('./routes/tables');
-const authRoute   = require('./routes/auth');
-const ensureAuth  = require('./middleware/ensureAuth');
-const adminRoute  = require('./routes/admin');
-const cron        = require('node-cron');
-const app         = express();
+const bookRoute  = require('./routes/book');
+const tableRoute = require('./routes/tables');
+const authRoute  = require('./routes/auth');
+const ensureAuth = require('./middleware/ensureAuth');
+const adminRoute = require('./routes/admin');
 
-// 1) Миграции схемы
+const app = express();
+
+// 1) Накатываем миграции схемы из schema.sql
 async function runMigrations() {
   const sql = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
   await pool.query(sql);
   console.log('✅ Schema migrations applied');
 }
 
-// 2) Настройка сессий
+// 2) Сессии в Postgres
 function setupSessions() {
   app.use(
     session({
       store: new PgSession({
-        pool,               // ваш pg-pool
-        tableName: 'sessions'
+        pool,                // наш pg-pool
+        tableName: 'sessions'// имя таблицы для сессий
       }),
       secret: process.env.SESSION_SECRET || 'default-secret',
       resave: false,
       saveUninitialized: false,
-      cookie:   { maxAge: 1000 * 60 * 60 * 2 } // 2 часа
+      cookie: { maxAge: 1000 * 60 * 60 * 2 } // 2 часа
     })
   );
 }
@@ -53,26 +54,26 @@ function setupStatic() {
   app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 }
 
-// 5) EJS
+// 5) Шаблоны EJS
 function setupViews() {
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
 }
 
-// 6) Роуты
+// 6) Основные маршруты
 function setupRoutes() {
   // публичные страницы
-  app.get('/',       (req, res) => res.render('pages/index',   { user: req.session.user }));
-  app.get('/booking',(req, res) => res.render('pages/booking', { user: req.session.user }));
+  app.get('/',        (req, res) => res.render('pages/index',   { user: req.session.user }));
+  app.get('/booking', (req, res) => res.render('pages/booking', { user: req.session.user }));
 
-  // auth: login, register, logout
+  // аутентификация
   app.use('/', authRoute);
 
   // личный кабинет
   app.get('/account', ensureAuth, async (req, res, next) => {
     try {
       const user = req.session.user;
-      const [rows] = await pool.query(
+      const { rows } = await pool.query(
         `SELECT b.id, b.booking_date, b.booking_time, b.table_id, t.seats
            FROM bookings b
            JOIN tables t ON t.id = b.table_id
@@ -120,7 +121,7 @@ function setupRoutes() {
   app.use('/',            adminRoute);
 }
 
-// 7) Крон-задача для чистки старых броней
+// 7) Крон-задача (удаление старых броней)
 function setupCron() {
   cron.schedule(
     '0 0 * * *',
@@ -141,7 +142,7 @@ function setupNotFound() {
   app.use((req, res) => res.status(404).send('Not Found'));
 }
 
-// 9) Запуск всего
+// 9) Запуск приложения
 (async () => {
   try {
     await runMigrations();
@@ -154,7 +155,7 @@ function setupNotFound() {
     setupNotFound();
 
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`Server listening on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
   } catch (err) {
     console.error('Fatal error on startup:', err);
     process.exit(1);

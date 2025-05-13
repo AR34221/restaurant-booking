@@ -75,4 +75,9 @@ INSERT INTO bookings (id, user_id, table_id, booking_date, booking_time, created
   (226, 52,6,  '2025-05-21', '18:00 - 19:30', '2025-05-11 03:17:59')
 ON CONFLICT DO NOTHING;
 
--- 9) Сессии теперь создаёт connect-pg-simple автоматически по умолчанию, без миграции здесь.
+-- 9) Таблица sessions для connect-pg-simple
+CREATE TABLE IF NOT EXISTS sessions (
+  sid    VARCHAR(128) PRIMARY KEY,
+  sess   JSON NOT NULL,
+  expire TIMESTAMP NOT NULL
+);

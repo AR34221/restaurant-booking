@@ -12,9 +12,9 @@
   <%- include('../partials/header', { page: 'admin', user: user }) %>
 
   <main class="admin-dashboard admin-sections">
+    <!-- Секция бронирований -->
     <section class="admin-section bookings-section">
-      <h2>Панель администратора</h2>
-      <h3>Бронирования</h3>
+      <h2>Бронирования</h2>
       <table>
         <thead>
           <tr>
@@ -46,56 +46,9 @@
       </table>
     </section>
 
-    <section class="admin-section tables-section">
-      <h3>Столы</h3>
-      <form class="inline-form" method="POST" action="/admin/tables/add">
-        <input type="number" name="seats" placeholder="Мест" required>
-        <select name="location" required>
-          <option value="Основной зал">Основной зал</option>
-          <option value="Веранда">Веранда</option>
-        </select>
-        <button class="btn-primary">Добавить стол</button>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Мест</th>
-            <th>Зал</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% tables.forEach(t => { %>
-            <tr>
-              <form method="POST" action="/admin/tables/edit" class="inline-form">
-                <td>
-                  <%= t.id %>
-                  <input type="hidden" name="id" value="<%= t.id %>">
-                </td>
-                <td><input type="number" name="seats" value="<%= t.seats %>" required></td>
-                <td>
-                  <select name="location">
-                    <option value="Основной зал" <%= t.location === 'Основной зал' ? 'selected' : '' %>>Основной зал</option>
-                    <option value="Веранда" <%= t.location === 'Веранда' ? 'selected' : '' %>>Веранда</option>
-                  </select>
-                </td>
-                <td>
-                  <button class="btn-primary">Сохранить</button>
-              </form>
-                  <form method="POST" action="/admin/tables/delete" onsubmit="return confirm('Удалить этот стол?');">
-                    <input type="hidden" name="id" value="<%= t.id %>">
-                    <button class="btn-danger">Удалить</button>
-                  </form>
-                </td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </section>
-
+    <!-- Секция пользователей -->
     <section class="admin-section users-section">
-      <h3>Пользователи</h3>
+      <h2>Пользователи</h2>
       <table>
         <thead>
           <tr>

@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const img = document.createElement('img');
         img.classList.add('table-img');
-        img.src = `/img/Table_${booked.includes(table.id) ? 'Red' : 'Green'}.png`;
+        img.src = `/img/Table_${table.id}_${booked.includes(table.id) ? 'Red' : 'Green'}.png`;
         img.alt = `Стол ${table.id}`;
         div.appendChild(img);
 

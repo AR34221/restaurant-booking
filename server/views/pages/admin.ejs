@@ -24,7 +24,7 @@
             <td><%= b.id %></td>
             <td><%= b.username %></td>
             <td><%= b.table_id %></td>
-            <td><%= b.booking_date.toLocaleDateString('ru-RU') %></td>
+            <td><%= b.booking_date %></td>
             <td><%= b.booking_time %></td>
             <td>
               <form method="POST" action="/admin/bookings/delete" onsubmit="return confirm('Удалить это бронирование?');">

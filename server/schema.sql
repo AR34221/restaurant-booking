@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS bookings, tables, users CASCADE;
 DROP TYPE IF EXISTS table_location;
 DROP TYPE IF EXISTS user_role;
-DROP TABLE IF EXISTS session;
+DROP TABLE IF EXISTS sessions;
 
 -- 2) Создаём ENUM-типы
 CREATE TYPE user_role AS ENUM ('user','admin');

@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Админка — FLAVOR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/admin.css" />
 </head>
@@ -12,7 +15,6 @@
   <%- include('../partials/header', { page: 'admin', user: user }) %>
 
   <main class="admin-dashboard admin-sections">
-    <!-- Секция бронирований -->
     <section class="admin-section bookings-section">
       <h2>Бронирования</h2>
       <table>
@@ -35,7 +37,11 @@
               <td><%= b.booking_date %></td>
               <td><%= b.booking_time %></td>
               <td>
-                <form method="POST" action="/admin/bookings/delete" onsubmit="return confirm('Удалить это бронирование?');">
+                <form
+                  method="POST"
+                  action="/admin/bookings/delete"
+                  onsubmit="return confirm('Удалить это бронирование?');"
+                >
                   <input type="hidden" name="id" value="<%= b.id %>">
                   <button class="btn-danger">Удалить</button>
                 </form>
@@ -46,7 +52,6 @@
       </table>
     </section>
 
-    <!-- Секция пользователей -->
     <section class="admin-section users-section">
       <h2>Пользователи</h2>
       <table>
@@ -67,10 +72,18 @@
               <td><%= u.email %></td>
               <td><%= u.role %></td>
               <td>
-                <form method="POST" action="/admin/users/delete" onsubmit="return confirm('Удалить пользователя?');">
-                  <input type="hidden" name="id" value="<%= u.id %>">
-                  <button class="btn-danger">Удалить</button>
-                </form>
+                <% if (u.role !== 'admin') { %>
+                  <form
+                    method="POST"
+                    action="/admin/users/delete"
+                    onsubmit="return confirm('Удалить пользователя?');"
+                  >
+                    <input type="hidden" name="id" value="<%= u.id %>">
+                    <button class="btn-danger">Удалить</button>
+                  </form>
+                <% } else { %>
+                  &mdash;
+                <% } %>
               </td>
             </tr>
           <% }) %>

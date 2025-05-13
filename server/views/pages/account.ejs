@@ -15,7 +15,6 @@
   <%- include('../partials/header', { page: 'account', user: user }) %>
 
   <main>
-    <!-- Профиль -->
     <section class="account-container">
       <h2>Учётная запись</h2>
       <div class="account-info">
@@ -24,15 +23,21 @@
         <p><strong>Email:</strong> <%= user.email %></p>
       </div>
       <div class="account-actions">
-        <!-- Форма удаления аккаунта -->
-        <form method="POST" action="/account/delete" onsubmit="return confirm('Вы уверены? Это действие необратимо.');">
-          <button type="submit" class="button button-secondary">Удалить аккаунт</button>
-        </form>
+        <% if (user.role !== 'admin') { %>
+          <form
+            method="POST"
+            action="/account/delete"
+            onsubmit="return confirm('Вы уверены? Это действие необратимо.');"
+          >
+            <button type="submit" class="button button-secondary">
+              Удалить аккаунт
+            </button>
+          </form>
+        <% } %>
         <a href="/logout" class="button button-secondary">Выйти</a>
       </div>
     </section>
 
-    <!-- Список бронирований -->
     <section class="account-bookings">
       <h2>Мои бронирования</h2>
       <% if (bookings.length) { %>

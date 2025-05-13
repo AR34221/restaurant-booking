@@ -1,32 +1,27 @@
 // server/db.js
 const { Pool } = require('pg');
 
-// Если вы видите у себя в Render переменную DATABASE_URL,
-// она уже содержит все параметры подключения.
-// Иначе раскомментируйте секцию ниже и задайте по-отдельности.
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  // host:     process.env.DB_HOST,
-  // port:     process.env.DB_PORT,
-  // user:     process.env.DB_USER,
-  // password: process.env.DB_PASSWORD,
-  // database: process.env.DB_NAME,
+  host:     process.env.DB_HOST,                 // Render: e.g. db-xxxx.us-east-1.postgres.render.com
+  port:     Number(process.env.DB_PORT),         // обычно 5432
+  user:     process.env.DB_USER,                 // из Render Connect Info
+  password: process.env.DB_PASSWORD,             // из Render Connect Info
+  database: process.env.DB_NAME,                 // имя базы в Render
   max:      10,
-  idleTimeoutMillis: 30000,
+  idleTimeoutMillis: 30000
 });
 
-// Сразу выставляем часовой пояс
+// Устанавливаем таймзону на UTC при каждом подключении
 pool.on('connect', async client => {
   try {
-    await client.query("SET TIME ZONE '+00:00'");
-    console.log('🌐 Time zone set to +00:00');
+    await client.query("SET TIME ZONE '+00:00';");
   } catch (err) {
-    console.error('❌ Cannot set time zone:', err);
+    console.error('Error setting time zone:', err);
   }
 });
 
 pool.on('error', err => {
-  console.error('❌ Unexpected Postgres error:', err);
+  console.error('Unexpected Postgres error:', err);
   process.exit(-1);
 });
 

@@ -4,7 +4,7 @@ const pool        = require('../db');
 const ensureAuth  = require('../middleware/ensureAuth');
 const router      = express.Router();
 
-// Middleware: доступ только для админа
+// Все маршруты /admin/* требуют аутентификации и роли admin
 router.use('/admin', ensureAuth, (req, res, next) => {
   if (req.session.user.role !== 'admin') {
     return res.status(403).send('Доступ запрещён');
@@ -16,7 +16,9 @@ router.use('/admin', ensureAuth, (req, res, next) => {
 router.get('/admin', async (req, res, next) => {
   try {
     const bookingsRes = await pool.query(
-      `SELECT b.id, u.username, b.table_id,
+      `SELECT b.id,
+              u.username,
+              b.table_id,
               to_char(b.booking_date, 'YYYY-MM-DD') AS booking_date,
               b.booking_time
          FROM bookings b
@@ -31,7 +33,7 @@ router.get('/admin', async (req, res, next) => {
     );
 
     res.render('pages/admin', {
-      user: req.session.user,
+      user:     req.session.user,
       bookings: bookingsRes.rows,
       tables:   tablesRes.rows,
       users:    usersRes.rows

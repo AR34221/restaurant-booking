@@ -124,21 +124,27 @@ function setupRoutes() {
 
 }
 
-// 7) Крон-задача (удаление старых броней)
+// 7) Крон-задача (удаление устаревших и истёкших броней)
 function setupCron() {
   cron.schedule(
-    '0 0 * * *',
+    '0 * * * *', // каждый час в начале часа
     async () => {
       try {
-        await pool.query('DELETE FROM bookings WHERE booking_date < CURRENT_DATE');
-        console.log('Old bookings cleaned up');
+        await pool.query(`
+          DELETE FROM bookings
+          WHERE booking_date < CURRENT_DATE
+             OR (booking_date = CURRENT_DATE
+                 AND (split_part(booking_time, ' - ', 2))::time < LOCALTIME)
+        `);
+        console.log('Expired bookings cleaned up');
       } catch (err) {
-        console.error('Error cleaning old bookings:', err);
+        console.error('Error cleaning expired bookings:', err);
       }
     },
     { timezone: 'Europe/Amsterdam' }
   );
 }
+
 
 // 8) 404
 function setupNotFound() {

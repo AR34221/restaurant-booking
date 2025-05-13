@@ -1,35 +1,40 @@
-/* css/admin.css */
+/* ===== Базовая вёрстка для фиксации футера ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1 0 auto;
+}
 
-/* Основной контейнер админ-панели */
+/* ===== Стили админ-панели ===== */
 .admin-dashboard {
   padding: 120px 10px;
   max-width: 1200px;
   margin: 0 auto;
   color: #fff;
 }
-
-/* Заголовок */
 .admin-dashboard h2 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 2rem;
   margin-bottom: 20px;
 }
-
-/* Общий отступ между секциями */
 .admin-section {
   margin-bottom: 40px;
 }
-
-/* Названия секций */
 .admin-section h3 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 1.5rem;
   margin-bottom: 12px;
 }
-
-/* Таблицы: прокрутка по горизонтали */
 .admin-section table {
   width: 100%;
   border-collapse: collapse;
@@ -47,8 +52,6 @@
   font-weight: 400;
   font-size: 1rem;
 }
-
-/* Инлайн-формы */
 .inline-form {
   display: inline-flex;
   gap: 8px;
@@ -66,8 +69,6 @@
 .inline-form input:focus {
   outline: 2px solid #3CBA54;
 }
-
-/* Кнопки */
 .btn-primary,
 .btn-danger {
   background: #424447;
@@ -85,7 +86,6 @@
   background: #787b7e;
 }
 
-/* Десктоп: бронирования и пользователи в ряд */
 @media (min-width: 1024px) {
   .admin-dashboard {
     display: grid;
@@ -110,7 +110,6 @@
   }
 }
 
-/* Планшет и мобильный: колонки */
 @media (max-width: 1023px) {
   .admin-dashboard {
     display: block;
@@ -130,10 +129,9 @@
   }
 }
 
-/* Узкие экраны */
 @media (max-width: 480px) {
   .admin-dashboard {
-    padding: 140px 20px 50px; /* +20px сверху к desktop-паддингу */
+    padding: 140px 20px 50px;
   }
   .admin-section th,
   .admin-section td {
@@ -145,5 +143,11 @@
   .btn-danger {
     font-size: 0.9rem;
     padding: 5px 8px;
+  }
+  footer {
+    flex-direction: column;
+    padding: 15px 10px;
+    text-align: center;
+    gap: 5px;
   }
 }

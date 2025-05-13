@@ -1,8 +1,15 @@
 -- server/schema.sql
 
--- 1) Типы (если не существуют)
-CREATE TYPE IF NOT EXISTS user_role      AS ENUM ('user','admin');
-CREATE TYPE IF NOT EXISTS table_location AS ENUM ('Основной зал','Веранда');
+-- 1) Типы (создать если не существует)
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+    CREATE TYPE user_role AS ENUM ('user','admin');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'table_location') THEN
+    CREATE TYPE table_location AS ENUM ('Основной зал','Веранда');
+  END IF;
+END$$;
 
 -- 2) Таблица users
 CREATE TABLE IF NOT EXISTS users (

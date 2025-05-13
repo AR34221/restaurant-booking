@@ -1,95 +1,75 @@
 // server/routes/auth.js
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db      = require('../db');
-const router  = express.Router();
+const pool = require('../db');
+const router = express.Router();
 
-// Форма входа
+// GET: страница логина
 router.get('/login', (req, res) => {
   res.render('pages/login', { error: null });
 });
 
-// Обработка входа
+// POST: логин
 router.post('/login', async (req, res) => {
   const { identifier, password } = req.body;
   try {
-    // Ищем пользователя по email или телефону
-    const [rows] = await db.query(
-      'SELECT * FROM users WHERE email = ? OR phone = ?',
-      [identifier, identifier]
+    // Ищем пользователя по username или email
+    const { rows } = await pool.query(
+      'SELECT id, username, phone, email, password, role FROM users WHERE username = $1 OR email = $1',
+      [identifier]
     );
-    if (rows.length === 0) {
-      return res.render('pages/login', { error: 'Пользователь не найден' });
+    if (!rows.length) {
+      return res.render('pages/login', { error: 'Неверные учётные данные' });
     }
-
     const user = rows[0];
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.render('pages/login', { error: 'Неверный пароль' });
+      return res.render('pages/login', { error: 'Неверные учётные данные' });
     }
-
-    // Сохраняем в сессию
+    // Сохраняем сессию
     req.session.user = {
-      id:    user.id,
-      username: user.username, 
-      email: user.email,
+      id: user.id,
+      username: user.username,
       phone: user.phone,
-      role:  user.role
+      email: user.email,
+      role: user.role
     };
-    res.redirect('/account');
-
+    return res.redirect('/');
   } catch (err) {
     console.error('Login error:', err);
-    res.render('pages/login', { error: 'Ошибка сервера, попробуйте позже' });
+    return res.status(500).send('Ошибка сервера, попробуйте позже');
   }
 });
 
-// Форма регистрации
+// GET: страница регистрации
 router.get('/register', (req, res) => {
   res.render('pages/register', { error: null });
 });
 
-// Обработка регистрации
+// POST: регистрация
 router.post('/register', async (req, res) => {
-  const { username, phone, email, password, confirmPassword } = req.body;
-
-  if (password !== confirmPassword) {
-    return res.render('pages/register', { error: 'Пароли не совпадают' });
-  }
-
+  const { username, phone, email, password } = req.body;
   try {
     const hash = await bcrypt.hash(password, 10);
-    const [result] = await db.query(
-      'INSERT INTO users (username, phone, email, password, role) VALUES (?, ?, ?, ?, ?)',
-      [username, phone, email, hash, 'user']
+    const { rows } = await pool.query(
+      'INSERT INTO users (username, phone, email, password) VALUES ($1, $2, $3, $4) RETURNING id, username, phone, email, role',
+      [username, phone, email, hash]
     );
-
-    // Авто‐логин
-    req.session.user = {
-      id:       result.insertId,
-      username,
-      email,
-      phone,
-      role:     'user'
-    };
-    res.redirect('/account');
-
+    const newUser = rows[0];
+    req.session.user = newUser;
+    return res.redirect('/');
   } catch (err) {
-    console.error('Регистрация не удалась:', err);
-    if (err.code === 'ER_DUP_ENTRY') {
-      let msg;
-      if (err.sqlMessage.includes('email')) msg = 'Пользователь с таким email уже существует';
-      else if (err.sqlMessage.includes('phone')) msg = 'Пользователь с таким телефоном уже существует';
-      else msg = 'Пользователь с такими данными уже существует';
-      return res.render('pages/register', { error: msg });
-    }
-    res.render('pages/register', { error: 'Не удалось зарегистрироваться, попробуйте ещё раз.' });
+    console.error('Register error:', err);
+    return res.render('pages/register', { error: 'Не удалось зарегистрировать пользователя' });
   }
 });
 
-// Выход
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => {
+// POST: выход
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Logout error:', err);
+    }
     res.redirect('/login');
   });
 });

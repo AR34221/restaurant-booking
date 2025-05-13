@@ -1,32 +1,32 @@
 // server/routes/tables.js
 const express = require('express');
-const db      = require('../db');
+const pool    = require('../db');
 const router  = express.Router();
 
-// GET /          — все столы
+// GET /api/tables  — все столы
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await db.query(`SELECT id, seats, location FROM tables`);
-    res.json({ tables: rows });
+    const result = await pool.query(
+      'SELECT id, seats, location FROM tables'
+    );
+    res.json({ tables: result.rows });
   } catch (err) {
-    console.error(err);
+    console.error('Tables error:', err);
     res.status(500).json({ error: 'DB error' });
   }
 });
 
-// GET /booked   — занятые столы в date+time
+// GET /api/tables/booked?date=…&time=…  — занятые столы
 router.get('/booked', async (req, res) => {
   const { date, time } = req.query;
   try {
-    const [rows] = await db.query(
-      `SELECT table_id FROM bookings
-       WHERE booking_date = ? AND booking_time = ?`,
+    const result = await pool.query(
+      'SELECT table_id FROM bookings WHERE booking_date = $1 AND booking_time = $2',
       [date, time]
     );
-    // отдать просто массив ID
-    res.json({ booked: rows.map(r => r.table_id) });
+    res.json({ booked: result.rows.map(r => r.table_id) });
   } catch (err) {
-    console.error(err);
+    console.error('Booked error:', err);
     res.status(500).json({ error: 'DB error' });
   }
 });

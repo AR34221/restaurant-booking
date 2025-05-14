@@ -1,4 +1,3 @@
-  /* Сброс стилей */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@ body {
     color: #fff;
 }
 
-/* Шапка сайта */
 header {
     background-color: #1C1D1E;
     padding: 10px;
@@ -24,12 +22,12 @@ header {
     z-index: 10;
     padding-left: 100px;
     padding-right: 100px;
-    height: 100px; /* Высота хедера уменьшена */
+    height: 100px; 
 }
 
 header .logo h1 {
     color: #fff;
-    font-weight: 400; /* Regular */
+    font-weight: 400; 
     font-size: 2rem;
 }
 
@@ -45,7 +43,7 @@ header nav ul li {
 
 header nav ul li a {
     position: relative;
-    display: inline-block; /* важно */
+    display: inline-block; 
     color: #fff;
     text-decoration: none;
     font-weight: 400;
@@ -69,10 +67,9 @@ header nav ul li a:hover::after {
 
 
 header nav ul li a.active {
-    font-weight: 600; /* Semibold для активной страницы */
+    font-weight: 600; 
 }
 
-/* Приветствие с фоном */
 .intro {
     position: relative;
     background-size: cover;
@@ -91,7 +88,7 @@ header nav ul li a.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8); /* Более темное затенение */
+    background: rgba(0, 0, 0, 0.8); 
     z-index: 1;
 }
 
@@ -114,16 +111,15 @@ header nav ul li a.active {
     margin-top: 37px;
 }
 
-/* Меню */
 .menu {
-    background-color: #2A2D2F; /* Темно-серый фон для всей секции меню */
+    background-color: #2A2D2F; 
     margin-top: 0;
 }
 
 .menu-header {
     background-color: #2A2D2F;
     height: 127px;
-    width: 100vw; /* Растягиваем на всю ширину экрана */
+    width: 100vw; 
     position: relative;
     left: 50%;
     right: 50%;
@@ -142,16 +138,15 @@ header nav ul li a.active {
     color: #fff;
 }
 
-/* Категории меню */
 .menu-category {
     margin-top: 0px;
-    padding: 0 100px; /* Отступы для содержимого категорий */
+    padding: 0 100px; 
 }
 
 .menu-category-header {
     background-color: #1C1D1E;
     height: 127px;
-    width: 100vw; /* Растягиваем на всю ширину экрана */
+    width: 100vw; 
     position: relative;
     left: 50%;
     right: 50%;
@@ -172,7 +167,6 @@ header nav ul li a.active {
     text-align: center;
 }
 
-/* Меню: блюда */
 .menu-items {
     display: flex;
     flex-wrap: wrap;
@@ -198,7 +192,7 @@ header nav ul li a.active {
     object-fit: cover;
     border-radius: 10px;
     flex-shrink: 0;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6); /* Тень */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6); 
 }
 
 
@@ -231,19 +225,17 @@ header nav ul li a.active {
 }
 
 
-
-/* Подвал */
 footer {
     background-color: #1C1D1E;
     text-align: center;
     padding: 20px;
     margin-top: 0px;
-    height: 80px; /* Высота футера уменьшена */
+    height: 80px; 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 100px; /* Отступ слева */
-    padding-right: 100px; /* Отступ справа */
+    padding-left: 100px; 
+    padding-right: 100px;
     color: #fff;
 }
 
@@ -251,14 +243,11 @@ footer p {
     white-space: nowrap;
 }
 
-/* ================================
-   Адаптивность для экранов < 768px
-   ================================ */
 @media (max-width: 768px) {
     main {
         margin-top: 100px;
     }
-  /* Шапка */
+
   header {
     flex-direction: column;
     height: auto;
@@ -278,9 +267,9 @@ footer p {
     font-size: 1rem;
   }
 
-  /* Секция intro */
+
   .intro {
-    padding-top: 80px; /* чтобы не пересекаться с header */
+    padding-top: 80px; 
   }
   .intro-content {
     width: 90%;
@@ -295,7 +284,6 @@ footer p {
     margin-top: 20px;
   }
 
-  /* Меню */
   .menu-category {
     padding: 0 20px;
   }
@@ -325,7 +313,6 @@ footer p {
     font-size: 1.1rem;
   }
 
-  /* Футер */
   footer {
     flex-direction: column;
     padding: 15px;

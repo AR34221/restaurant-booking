@@ -1,15 +1,12 @@
-// server/routes/auth.js
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db      = require('../db');
 const router  = express.Router();
 
-// GET /login
 router.get('/login', (req, res) => {
   res.render('pages/login', { error: null });
 });
 
-// POST /login
 router.post('/login', async (req, res) => {
   const { identifier, password } = req.body;
   try {
@@ -25,7 +22,6 @@ router.post('/login', async (req, res) => {
     if (!ok) {
       return res.render('pages/login', { error: 'Неверный пароль' });
     }
-    // сохраняем в сессии
     req.session.user = {
       id:       user.id,
       username: user.username,
@@ -40,12 +36,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET /register
 router.get('/register', (req, res) => {
   res.render('pages/register', { error: null });
 });
 
-// POST /register
 router.post('/register', async (req, res) => {
   const { username, email, phone, password, confirm } = req.body;
   if (password !== confirm) {
@@ -58,7 +52,6 @@ router.post('/register', async (req, res) => {
        VALUES (?, ?, ?, ?, ?)`,
       [username, email, phone, hash, 'user']
     );
-    // авто-логин
     req.session.user = {
       id:       result.insertId,
       username,
@@ -78,7 +71,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// GET /logout
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');

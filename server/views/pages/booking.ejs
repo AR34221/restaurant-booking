@@ -15,14 +15,12 @@
   <%- include('../partials/header', { page: 'booking', user: user }) %>
 
   <main>
-    <!-- Выбор даты/времени -->
     <section class="booking-controls">
       <h2>Забронировать</h2>
       <select id="date"></select>
       <select id="time"></select>
     </section>
 
-    <!-- Схема ресторана с гридом -->
     <section class="hall-wrapper">
       <div class="hall-labels">
         <div class="label left-label">Основной зал</div>
@@ -35,18 +33,14 @@
     </section>
   </main>
 
-  <!-- Модальное окно для подтверждения бронирования -->
 <div id="bookingModal" class="modal">
   <div class="modal-content">
-    <!-- Кнопка закрыть -->
     <span class="close">&times;</span>
 
-    <!-- Заголовок -->
     <div class="modal-title">
       <h2>Подтверждение бронирования</h2>
     </div>
 
-    <!-- Фото + оверлей с номером стола и местами -->
     <div class="photo-wrapper">
       <img
         class="table-photo"
@@ -58,7 +52,6 @@
       <span class="table-seats" id="tableSeats">2 места</span>
     </div>
 
-    <!-- Дата и время -->
     <div class="date-time-wrapper">
       <div class="date-block">
         <span class="dt-label">Дата:</span>
@@ -70,10 +63,8 @@
       </div>
     </div>
 
-    <!-- Кнопка подтвердить -->
     <button id="bookButton">Забронировать</button>
 
-    <!-- Сообщение об успехе -->
     <p id="successMessage">
       <span class="success-main">Успешно забронировано!</span><br>
       <span class="success-sub">Отменить бронь можно в личном кабинете</span>
@@ -84,7 +75,6 @@
 
   <%- include('../partials/footer') %>
 
-  <!-- Подключаем скрипт после всей разметки -->
   <script src="/js/booking.js"></script>
 </body>
 </html>

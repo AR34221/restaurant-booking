@@ -1,15 +1,12 @@
-// server/routes/auth.js
 const express = require('express');
 const bcrypt  = require('bcryptjs');
 const pool    = require('../db');
 const router  = express.Router();
 
-// GET: страница логина
 router.get('/login', (req, res) => {
   res.render('pages/login', { error: null });
 });
 
-// POST: логин
 router.post('/login', async (req, res) => {
   const { identifier, password } = req.body;
   try {
@@ -34,7 +31,6 @@ router.post('/login', async (req, res) => {
       email:    user.email,
       role:     user.role
     };
-    // После логина сразу в личный кабинет
     return res.redirect('/account');
   } catch (err) {
     console.error('Login error:', err);
@@ -42,7 +38,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET: выход по ссылке
 router.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) console.error('Logout error:', err);
@@ -50,12 +45,10 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// GET: страница регистрации
 router.get('/register', (req, res) => {
   res.render('pages/register', { error: null });
 });
 
-// POST: регистрация
 router.post('/register', async (req, res) => {
   const { username, phone, email, password } = req.body;
   try {

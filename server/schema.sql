@@ -1,6 +1,3 @@
--- server/schema.sql
-
--- 1) Типы (создать если не существует)
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
@@ -11,7 +8,6 @@ BEGIN
   END IF;
 END$$;
 
--- 2) Таблица users
 CREATE TABLE IF NOT EXISTS users (
   id         SERIAL PRIMARY KEY,
   username   VARCHAR(50)  NOT NULL,
@@ -22,14 +18,12 @@ CREATE TABLE IF NOT EXISTS users (
   role       user_role    NOT NULL DEFAULT 'user'
 );
 
--- 3) Таблица tables
 CREATE TABLE IF NOT EXISTS tables (
   id       SERIAL PRIMARY KEY,
   seats    INT   NOT NULL,
   location table_location NOT NULL
 );
 
--- 4) Таблица bookings
 CREATE TABLE IF NOT EXISTS bookings (
   id           SERIAL PRIMARY KEY,
   user_id      INT REFERENCES users(id)   ON DELETE SET NULL,
@@ -40,7 +34,6 @@ CREATE TABLE IF NOT EXISTS bookings (
   UNIQUE (table_id, booking_date, booking_time)
 );
 
--- 5) Таблица sessions для connect-pg-simple
 CREATE TABLE IF NOT EXISTS sessions (
   sid    VARCHAR(128) PRIMARY KEY,
   sess   JSON        NOT NULL,

@@ -1,14 +1,12 @@
-// server/index.js
 const fs        = require('fs');
 const path      = require('path');
 const express   = require('express');
 const session   = require('express-session');
 const cors      = require('cors');
-const pool      = require('./db');                       // наш PG-пул
-const PgSession = require('connect-pg-simple')(session); // хранение сессий в Postgres
+const pool      = require('./db');                       
+const PgSession = require('connect-pg-simple')(session); 
 const cron      = require('node-cron');
 
-// роуты и middleware
 const bookRoute  = require('./routes/book');
 const tableRoute = require('./routes/tables');
 const authRoute  = require('./routes/auth');
@@ -17,59 +15,50 @@ const adminRoute = require('./routes/admin');
 
 const app = express();
 
-// 1) Накатываем миграции схемы из schema.sql
 async function runMigrations() {
   const sql = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
   await pool.query(sql);
-  console.log('✅ Schema migrations applied');
+  console.log('Schema migrations applied');
 }
 
-// 2) Сессии в Postgres
 function setupSessions() {
   app.use(
     session({
       store: new PgSession({
-        pool,                // наш pg-pool
-        tableName: 'sessions'// имя таблицы для сессий
+        pool,               
+        tableName: 'sessions'
       }),
       secret: process.env.SESSION_SECRET || 'default-secret',
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 1000 * 60 * 60 * 2 } // 2 часа
+      cookie: { maxAge: 1000 * 60 * 60 * 2 } 
     })
   );
 }
 
-// 3) Парсеры и CORS
 function setupParsers() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 }
 
-// 4) Статика
 function setupStatic() {
   app.use('/css', express.static(path.join(__dirname, '..', 'css')));
   app.use('/js',  express.static(path.join(__dirname, '..', 'js')));
   app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 }
 
-// 5) Шаблоны EJS
 function setupViews() {
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
 }
 
-// 6) Основные маршруты
 function setupRoutes() {
-  // публичные страницы
   app.get('/',        (req, res) => res.render('pages/index',   { user: req.session.user }));
   app.get('/booking', (req, res) => res.render('pages/booking', { user: req.session.user }));
 
-  // аутентификация
   app.use('/', authRoute);
 
-  // личный кабинет
   app.get('/account', ensureAuth, async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -115,8 +104,6 @@ function setupRoutes() {
     }
   });
 
-  // API и админ
-  //app.use('/api/book',   bookRoute);
   app.use('/api/book', require('./routes/book'));
   app.use('/api/tables', tableRoute);
   app.use('/',            adminRoute);
@@ -124,10 +111,9 @@ function setupRoutes() {
 
 }
 
-// 7) Крон-задача (удаление устаревших и истёкших броней)
 function setupCron() {
   cron.schedule(
-    '0 * * * *', // каждый час в начале часа
+    '0 * * * *', 
     async () => {
       try {
         await pool.query(`
@@ -145,13 +131,10 @@ function setupCron() {
   );
 }
 
-
-// 8) 404
 function setupNotFound() {
   app.use((req, res) => res.status(404).send('Not Found'));
 }
 
-// 9) Запуск приложения
 (async () => {
   try {
     await runMigrations();

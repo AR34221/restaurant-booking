@@ -13,15 +13,12 @@
 </head>
 <body>
 
-  <!-- Навигация -->
   <%- include('../../partials/header', { page: 'admin', user: user }) %>
 
-  <!-- Контент -->
   <main class="admin-dashboard">
     <h2>Панель администратора</h2>
 
     <div class="admin-sections">
-      <!-- Секция бронирований -->
       <section class="admin-section bookings-section">
         <h3>Бронирования</h3>
         <table>
@@ -57,7 +54,6 @@
         </table>
       </section>
 
-      <!-- Секция пользователей -->
       <section class="admin-section users-section">
         <h3>Пользователи</h3>
         <table>
@@ -94,7 +90,6 @@
 
   </main>
 
-  <!-- Футер -->
   <%- include('../../partials/footer') %>
 
 </body>

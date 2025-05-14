@@ -1,5 +1,3 @@
-// public/js/booking.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const dateSelect = document.getElementById('date');
   const timeSelect = document.getElementById('time');
@@ -12,14 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let allTables = [];
 
-  // 1) Сгенерировать даты
   function generateDates() {
     const today = new Date();
     for (let i = 0; i < 30; i++) {
       const d = new Date(today);
       d.setDate(d.getDate() + i);
       const opt = document.createElement('option');
-      opt.value       = d.toISOString().split('T')[0]; // YYYY-MM-DD
+      opt.value       = d.toISOString().split('T')[0]; 
       opt.textContent = d.toLocaleDateString('ru-RU', {
         weekday: 'short', day: 'numeric', month: 'long'
       });
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dateSelect.selectedIndex = 0;
   }
 
-  // 2) Сгенерировать временные слоты с фильтрацией прошедших
   function populateTimes() {
     timeSelect.innerHTML = '';
     const selectedDate = dateSelect.value;
@@ -53,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     timeSelect.selectedIndex = 0;
   }
 
-  // 3) Загрузить все столы
   async function loadTables() {
     try {
       const res  = await fetch('/api/tables');
@@ -65,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 4) Обновить отображение столов
   async function updateTableDisplay() {
     const date = dateSelect.value;
     const time = timeSelect.value;
@@ -131,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 5) Бронирование
   bookBtn.addEventListener('click', async () => {
     const tableId     = +document.getElementById('tableNumber').innerText.split(' ')[1];
     const bookingDate = dateSelect.value;
@@ -170,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTableDisplay();
   });
 
-  // initial
   generateDates();
   populateTimes();
   loadTables();

@@ -1,9 +1,7 @@
-// server/routes/tables.js
 const express = require('express');
 const pool    = require('../db');
 const router  = express.Router();
 
-// GET /api/tables  — все столы
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(
@@ -16,7 +14,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/tables/booked?date=…&time=…  — занятые столы
 router.get('/booked', async (req, res) => {
   const { date, time } = req.query;
   try {

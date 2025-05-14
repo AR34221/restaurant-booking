@@ -1,10 +1,8 @@
-// server/routes/admin.js
 const express     = require('express');
 const pool        = require('../db');
 const ensureAuth  = require('../middleware/ensureAuth');
 const router      = express.Router();
 
-// Все маршруты /admin/* требуют аутентификации и роли admin
 router.use('/admin', ensureAuth, (req, res, next) => {
   if (req.session.user.role !== 'admin') {
     return res.status(403).send('Доступ запрещён');
@@ -12,7 +10,6 @@ router.use('/admin', ensureAuth, (req, res, next) => {
   next();
 });
 
-// GET /admin — панель администратора
 router.get('/admin', async (req, res, next) => {
   try {
     const bookingsRes = await pool.query(
@@ -43,7 +40,6 @@ router.get('/admin', async (req, res, next) => {
   }
 });
 
-// POST /admin/bookings/delete
 router.post('/admin/bookings/delete', async (req, res, next) => {
   try {
     await pool.query('DELETE FROM bookings WHERE id = $1', [req.body.id]);
@@ -53,7 +49,6 @@ router.post('/admin/bookings/delete', async (req, res, next) => {
   }
 });
 
-// POST /admin/tables/add
 router.post('/admin/tables/add', async (req, res, next) => {
   const { seats, location } = req.body;
   try {
@@ -67,7 +62,6 @@ router.post('/admin/tables/add', async (req, res, next) => {
   }
 });
 
-// POST /admin/tables/edit
 router.post('/admin/tables/edit', async (req, res, next) => {
   const { id, seats, location } = req.body;
   try {
@@ -81,7 +75,6 @@ router.post('/admin/tables/edit', async (req, res, next) => {
   }
 });
 
-// POST /admin/tables/delete
 router.post('/admin/tables/delete', async (req, res, next) => {
   try {
     await pool.query('DELETE FROM tables WHERE id = $1', [req.body.id]);
@@ -91,7 +84,6 @@ router.post('/admin/tables/delete', async (req, res, next) => {
   }
 });
 
-// POST /admin/users/delete
 router.post('/admin/users/delete', async (req, res, next) => {
   try {
     await pool.query('DELETE FROM users WHERE id = $1', [req.body.id]);

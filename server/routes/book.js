@@ -1,10 +1,8 @@
-// server/routes/book.js
 const express    = require('express');
 const ensureAuth = require('../middleware/ensureAuth');
 const pool       = require('../db');
 const router     = express.Router();
 
-// POST /api/book — создаём новую бронь
 router.post('/', ensureAuth, async (req, res) => {
   const userId             = req.session.user.id;
   const { table_id, booking_date, booking_time } = req.body;

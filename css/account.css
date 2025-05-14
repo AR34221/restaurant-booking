@@ -1,4 +1,3 @@
-/* ===== Базовая вёрстка для фиксации футера ===== */
 html, body {
   height: 100%;
   margin: 0;
@@ -13,7 +12,6 @@ main {
   flex: 1 0 auto;
 }
 
-/* ===== Стили «Личный кабинет» ===== */
 .account-container {
   max-width: 720px;
   margin: 120px auto 40px;
@@ -108,7 +106,6 @@ main {
   margin-top: 20px;
 }
 
-/* Сброс дефолтных стилей кнопок */
 .account-actions .button,
 .cancel-form .button-danger {
   appearance: none;

@@ -4,7 +4,6 @@ html, body {
     padding: 0;
   }
   
-  /* Основные стили */
   body {
     display: flex;
     flex-direction: column;
@@ -18,7 +17,6 @@ html, body {
     padding: 120px 100px 40px;
   }
   
-  /* Выбор даты/времени */
   .booking-controls {
     margin-top: 40px;
     margin-bottom: 50px;
@@ -59,7 +57,7 @@ html, body {
     background-color: #4A4F53;
 }
   
-  /* Структура зала */
+
   .hall-wrapper {
     position: relative;
     display: flex;
@@ -117,7 +115,7 @@ html, body {
     height: 100%;
   }
   
-  /* Столы */
+
   .table {
     position: absolute;
     cursor: pointer;
@@ -129,7 +127,6 @@ html, body {
     transform: scale(1.12);
   }
   
-  /* Красные (занятые) столы не реагируют на курсор и клик */
   .table.busy {
     pointer-events: none;
     cursor: default;
@@ -140,7 +137,7 @@ html, body {
     pointer-events: none;
   }
   
-  /* Позиционирование столов */
+
   .table[data-id="1"]  { top: 20px;  left:   0px; }
   .table[data-id="2"]  { top: 95px;  left:   0px; }
   .table[data-id="3"]  { top:170px;  left:   0px; }
@@ -159,7 +156,7 @@ html, body {
   .table[data-id="16"] { top: 50px;  left: 890px; }
   .table[data-id="17"] { top: 50px;  left: 770px; }
   
-  /* Модальное окно: фон */
+
   .modal {
     display: none;
     position: fixed;
@@ -171,7 +168,7 @@ html, body {
     align-items: center;
   }
   
-  /* Контейнер модалки */
+ 
   .modal-content {
     position: relative;
     background-color: #2C2C2E;
@@ -192,7 +189,7 @@ html, body {
     color: #BBB;
   }
   
-  /* Заголовок */
+
   .modal-title {
     text-align: center;
     margin-bottom: 12px;
@@ -205,8 +202,7 @@ html, body {
     color: #FFFFFF;
     margin: 0;
   }
-  
-  /* Фото стола с оверлеем */
+
   .photo-wrapper {
     position: relative;
     width: 277px;
@@ -222,7 +218,7 @@ html, body {
     display: block;
   }
   
-  /* Номер стола и места (теперь как дата/время) */
+
   .table-number,
   .table-seats {
     position: absolute;
@@ -237,7 +233,7 @@ html, body {
   .table-number { left: 12px; }
   .table-seats  { right: 12px; }
   
-  /* Блоки даты и времени */
+ 
   .date-time-wrapper {
     display: flex;
     flex-direction: column;
@@ -268,10 +264,10 @@ html, body {
     color: #FFFFFF;
   }
   
-  /* Кнопка «Забронировать» */
+
   #bookButton {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600; /* SemiBold */
+    font-weight: 600; 
     font-size: 16px;
     width: calc(100% - 40px);
     margin: 20px auto;
@@ -289,7 +285,7 @@ html, body {
     background-color: #33A044;
   }
   
-  /* Сообщение об успехе */
+
   #successMessage {
     text-align: center;
     margin-top: 20px;
@@ -299,7 +295,7 @@ html, body {
   .success-main {
     display: block;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600; /* SemiBold */ 
+    font-weight: 600;  
     font-size: 16px;
     color: #FFFFFF;
   }
@@ -313,9 +309,6 @@ html, body {
     color: #FFFFFF;
   }
 
-  
-  
-  /* Футер */
   footer {
     margin-top: auto;
     flex-shrink: 0;
@@ -330,18 +323,15 @@ html, body {
   }
   
 @media (max-width: 768px) {
-  /* Хедер */
   header {
     padding: 15px 10px;
   }
 
-  /* Основной контент */
   main {
     padding: 60px 10px 20px;
     
   }
 
-  /* Блок выбора даты/времени */
   .booking-controls {
     width: auto;
     margin: 20px auto;
@@ -359,7 +349,6 @@ html, body {
     margin: 0;
   }
 
-  /* Схема зала: прокрутка внутри контейнера */
   .hall-wrapper {
     width: 100%;
     padding: 0 10px;
@@ -375,7 +364,6 @@ html, body {
     background-size: contain;
   }
 
-  /* Модальное окно */
   .modal-content {
     width: 90%;
     max-width: 320px;
@@ -387,14 +375,13 @@ html, body {
     right: 5px;
   }
 
-  /* Фото стола */
   .photo-wrapper,
   .table-photo {
     width: 100%;
     height: auto;
   }
 
-  /* Дата/время */
+
   .date-time-wrapper {
     width: 100%;
     gap: 8px;
@@ -411,7 +398,6 @@ html, body {
     padding: 10px 0;
   }
 
-  /* Сообщение об успехе */
   #successMessage,
   .success-main {
     font-size: 14px;
@@ -420,7 +406,6 @@ html, body {
     font-size: 12px;
   }
 
-  /* Футер */
   footer {
     flex-direction: column;
     text-align: center;

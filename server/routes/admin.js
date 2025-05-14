@@ -20,7 +20,7 @@ router.get('/admin', async (req, res, next) => {
               b.booking_time
          FROM bookings b
          LEFT JOIN users u ON u.id = b.user_id
-        ORDER BY b.booking_date DESC, b.booking_time`
+        ORDER BY b.id DESC`
     );
     const tablesRes = await pool.query(
       'SELECT id, seats, location FROM tables ORDER BY id'
